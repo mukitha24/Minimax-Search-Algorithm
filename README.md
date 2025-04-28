@@ -1,6 +1,6 @@
 <h1>ExpNo 5 : Implement Minimax Search Algorithm for a Simple TIC-TAC-TOE game</h1> 
-<h3>Name:           </h3>
-<h3>Register Number/Staff Id:          </h3>
+<h3>Name:Mukitha V M           </h3>
+<h3>Register Number:212223040119          </h3>
 <H3>Aim:</H3>
 <p>
     Implement Minimax Search Algorithm for a Simple TIC-TAC-TOE game
@@ -63,6 +63,7 @@ Let's walk through the algorithm's execution with the full move tree, and show w
 Here is the function for scoring the game:
 
 # @player is the turn taking player
+<PRE>
 def score(game)
     if game.win?(@player)
         return 10
@@ -101,8 +102,46 @@ def minimax(game)
         return scores[min_score_index]
     end
 end
+</PRE>
+<H3>PROGRAM:</H3>
+<PRE>
+import math
 
+def minimax(curDepth, nodeIndex, maxTurn, scores, targetDepth, alpha, beta):
+    # Base case: targetDepth reached
+    if curDepth == targetDepth:
+        return scores[nodeIndex]
+
+    if maxTurn:
+        maxEval = -math.inf  # Initialize maximum evaluation
+        # Maximizing player's turn
+        for i in range(2):  # There are two children for each node
+            eval = minimax(curDepth + 1, nodeIndex * 2 + i, False, scores, targetDepth, alpha, beta)
+            maxEval = max(maxEval, eval)
+            alpha = max(alpha, eval)  # Update alpha
+            if beta <= alpha:  # Beta pruning
+                break
+        return maxEval
+    else:
+        minEval = math.inf  # Initialize minimum evaluation
+        # Minimizing player's turn
+        for i in range(2):  # There are two children for each node
+            eval = minimax(curDepth + 1, nodeIndex * 2 + i, True, scores, targetDepth, alpha, beta)
+            minEval = min(minEval, eval)
+            beta = min(beta, eval)  # Update beta
+            if beta <= alpha:  # Alpha pruning
+                break
+        return minEval
+
+ scores = [3, 5, 6, 9, 1, 2, 0, -1]
+    targetDepth = 3  # Example target depth
+
+    # Start Minimax from the root with initial alpha and beta values
+    best_value = minimax(0, 0, True, scores, targetDepth, -math.inf, math.inf)
+    print("The optimal value is:", best_value)
+</PRE>
 <hr>
+<
 <h2>Sample Input and Output</h2>
 
 ![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/6b668685-8bcc-43c5-b5c2-ddd43f3da84a)
